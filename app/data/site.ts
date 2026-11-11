@@ -6,11 +6,21 @@ export const navItems = [
   { path: '/join', label: '加入我们' },
 ] as const
 
-export const socials = [
-  { name: 'Instagram', qr: '/brand/social/Insta.png' },
-  { name: '小红书', qr: '/brand/social/RedNot.png' },
-  { name: '微信公众号', qr: '/brand/social/WeChat.png' },
-  { name: '抖音', qr: '/brand/social/Tiktok.png' },
+export interface Social {
+  name: string
+  /** QR code image, shown on the home page. */
+  qr: string
+  /** Profile link decoded from the QR code (tracking params removed). Without one, the footer shows the QR in a popover. */
+  url?: string
+  /** App to scan the QR with, for the popover caption. */
+  scanWith?: string
+}
+
+export const socials: Social[] = [
+  { name: 'Instagram', qr: '/brand/social/Insta.png', url: 'https://www.instagram.com/unswcsa/' },
+  { name: '小红书', qr: '/brand/social/RedNot.png', url: 'https://www.xiaohongshu.com/user/profile/6421819f0000000012011907' },
+  { name: '微信公众号', qr: '/brand/social/WeChat.png', scanWith: '微信' },
+  { name: '抖音', qr: '/brand/social/Tiktok.png', scanWith: '抖音' },
 ]
 
 export const introText =
