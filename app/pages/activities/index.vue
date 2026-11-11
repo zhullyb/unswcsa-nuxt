@@ -7,15 +7,11 @@ const route = useRoute()
 const router = useRouter()
 const { events, status, error, refresh, now } = useEvents()
 
-// Prerendered HTML has no query string, so only read ?year=&month= after hydration.
-const hydrated = useHydrated()
 const year = computed(() => {
-  if (!hydrated.value) return ''
   const q = route.query.year
   return typeof q === 'string' && /^[1-9]\d{3}$/.test(q) ? q : ''
 })
 const month = computed(() => {
-  if (!hydrated.value) return ''
   const q = route.query.month
   return typeof q === 'string' && /^(?:[1-9]|1[0-2])$/.test(q) ? q : ''
 })
@@ -50,9 +46,7 @@ function clear() {
   router.replace({ query: rest })
 }
 
-// Request state only drives the UI after hydration, so the first client render
-// always matches the server/prerendered HTML.
-const loading = computed(() => hydrated.value && status.value === 'pending' && !events.value.length)
+const loading = computed(() => status.value === 'pending' && !events.value.length)
 const retrying = ref(false)
 async function retry() {
   retrying.value = true

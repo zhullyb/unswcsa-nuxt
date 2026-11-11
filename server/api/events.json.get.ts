@@ -66,7 +66,7 @@ function sanitize(raw: unknown): CsaEvent[] {
 type Payload = { events: CsaEvent[]; fetchedAt: string }
 
 // Last successful payload. Kept in memory and persisted to Nitro's `data` storage
-// (`.data/kv` on disk), so a dev restart or a build during an upstream outage can
+// (`.data/kv` on disk), so a server restart during an upstream outage can
 // still serve the most recent snapshot instead of an empty page.
 const SNAPSHOT_KEY = 'events:snapshot'
 let lastGood: Payload | null = null
@@ -110,8 +110,5 @@ export default defineCachedEventHandler(
     maxAge: 60,
     swr: true,
     name: 'csa-events',
-    // Nitro persists this cache to disk; during `nuxt generate` that could ship a stale
-    // response from a previous build, so always hit the upstream when prerendering.
-    shouldBypassCache: () => Boolean(import.meta.prerender),
   },
 )

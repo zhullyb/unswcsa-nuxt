@@ -7,10 +7,7 @@ useHead({ title: '部门与团队' })
 const route = useRoute()
 const router = useRouter()
 
-// Prerendered HTML has no query string, so only read ?year= after hydration.
-const hydrated = useHydrated()
 const year = computed(() => {
-  if (!hydrated.value) return ''
   const q = route.query.year
   return typeof q === 'string' && /^[1-9]\d{3}$/.test(q) ? q : ''
 })

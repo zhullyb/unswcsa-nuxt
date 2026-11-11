@@ -37,9 +37,10 @@ export function eventState(e: CsaEvent, now: number): EventState {
 }
 
 /**
- * Events are fetched at build time (`nuxt generate` prerenders /api/events.json and
- * embeds the data in each page's payload), so nothing is requested from the upstream
- * at runtime. Updating the event list means rebuilding the site.
+ * Events come from the site's own `/api/events.json`, which the server fetches from
+ * the upstream at request time and caches briefly (see server/api/events.json.get.ts).
+ * On the first load the data is rendered on the server and embedded in the payload;
+ * client-side navigations reuse it or request `/api/events.json` from the browser.
  */
 export function useEvents() {
   const { data, status, error, refresh } = useFetch<{ events: CsaEvent[] }>('/api/events.json', {
@@ -47,8 +48,8 @@ export function useEvents() {
     default: () => ({ events: [] }),
   })
 
-  // `now` starts at the build time so hydration matches the prerendered HTML,
-  // then switches to the real time once mounted (updating 即将举行 / 已结束 badges).
+  // `now` starts at the server's render time so hydration matches the SSR HTML,
+  // then follows the real time once mounted (updating 即将举行 / 已结束 badges).
   const now = useState('csa-now', () => Date.now())
 
   if (import.meta.client) {
@@ -62,12 +63,4 @@ export function useEvents() {
 
   const events = computed(() => data.value?.events ?? [])
   return { events, status, error, refresh, now }
-}
-
-/** True only after hydration. Use it to gate anything that depends on the URL query,
- *  since prerendered HTML is always generated without a query string. */
-export function useHydrated() {
-  const hydrated = ref(false)
-  onMounted(() => (hydrated.value = true))
-  return hydrated
 }

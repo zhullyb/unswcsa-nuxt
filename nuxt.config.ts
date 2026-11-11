@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-// Built as a static site (SSG): run `npm run generate`, deploy `.output/public`.
+// Server-rendered (SSR): run `pnpm build`, then `node .output/server/index.mjs`.
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
@@ -20,21 +20,20 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    // Upstream feed read at build time; override with NUXT_EVENTS_SOURCE
+    // Upstream feed fetched by the server at request time (cached); override with NUXT_EVENTS_SOURCE
     eventsSource: 'https://unswcsa.com/api/events',
   },
-  // Legacy URLs. Exact paths are prerendered as static redirect pages; deeper paths
-  // (e.g. /brand-events/foo) fall back to 404.html and are redirected by the client router.
   routeRules: {
-    '/brand-events': { redirect: '/activities' },
-    '/brand-events/**': { redirect: '/activities' },
-    '/departments': { redirect: '/team' },
-    '/leaders': { redirect: '/team' },
-  },
-  nitro: {
-    prerender: {
-      crawlLinks: true,
-      routes: ['/', '/api/events.json', '/admin', '/brand-events', '/departments', '/leaders'],
-    },
+    // Legacy URLs, answered by the server with permanent redirects.
+    '/brand-events': { redirect: { to: '/activities', statusCode: 301 } },
+    '/brand-events/**': { redirect: { to: '/activities', statusCode: 301 } },
+    '/activities/*': { redirect: { to: '/activities', statusCode: 301 } },
+    '/departments': { redirect: { to: '/team', statusCode: 301 } },
+    '/leaders': { redirect: { to: '/team', statusCode: 301 } },
+    // Pages with no live data or query-dependent content are prerendered at build time
+    // and served as static files; everything else is rendered per request.
+    '/about': { prerender: true },
+    '/join': { prerender: true },
+    '/admin': { prerender: true },
   },
 })
