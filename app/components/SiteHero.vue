@@ -3,7 +3,7 @@ import type { HeroMeta } from '~/types/page-meta'
 
 // Lives in the layout, so the band stays mounted across navigations;
 // only the text inside cross-fades.
-defineProps<{ hero: HeroMeta; routeKey: string }>()
+defineProps<{ hero: HeroMeta, routeKey: string }>()
 </script>
 
 <template>

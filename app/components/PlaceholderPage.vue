@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ eyebrow: string | number; title: string; description: string }>()
+defineProps<{ eyebrow: string | number, title: string, description: string }>()
 </script>
 
 <template>

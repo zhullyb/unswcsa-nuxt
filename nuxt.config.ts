@@ -1,9 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // Server-rendered (SSR): run `pnpm build`, then `node .output/server/index.mjs`.
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  modules: ['@nuxt/eslint'],
   devtools: { enabled: false },
-  css: ['~/assets/css/tokens.css', '~/assets/css/base.css', '~/assets/css/ui.css'],
   app: {
     // The hero lives in the layout and stays put; only the page body fades.
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -19,6 +18,7 @@ export default defineNuxtConfig({
       ],
     },
   },
+  css: ['~/assets/css/tokens.css', '~/assets/css/base.css', '~/assets/css/ui.css'],
   runtimeConfig: {
     // Upstream feed fetched by the server at request time (cached); override with NUXT_EVENTS_SOURCE
     eventsSource: 'https://unswcsa.com/api/events',
@@ -35,5 +35,10 @@ export default defineNuxtConfig({
     '/about': { prerender: true },
     '/join': { prerender: true },
     '/admin': { prerender: true },
+  },
+  compatibilityDate: '2025-07-15',
+  eslint: {
+    // Formatting rules via ESLint Stylistic instead of Prettier, tuned to the existing code style.
+    config: { stylistic: { arrowParens: true, braceStyle: '1tbs' } },
   },
 })

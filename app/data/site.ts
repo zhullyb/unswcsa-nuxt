@@ -23,8 +23,8 @@ export const socials: Social[] = [
   { name: '抖音', qr: '/brand/social/Tiktok.png', scanWith: '抖音' },
 ]
 
-export const introText =
-  '新南学联成立于 1992 年，陪伴一代代中国留学生走过在 UNSW 的学习与生活。从新生融入、学业与职业发展，到文化交流、体育活动与学生福祉，我们希望让每位同学都能找到参与的机会、同行的伙伴，以及属于自己的归属感。'
+export const introText
+  = '新南学联成立于 1992 年，陪伴一代代中国留学生走过在 UNSW 的学习与生活。从新生融入、学业与职业发展，到文化交流、体育活动与学生福祉，我们希望让每位同学都能找到参与的机会、同行的伙伴，以及属于自己的归属感。'
 
 export const departments = [
   {

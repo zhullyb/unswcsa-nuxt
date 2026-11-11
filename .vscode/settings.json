@@ -1,0 +1,10 @@
+{
+  // ESLint (with Stylistic) is the formatter; keep other formatters out of the way.
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.validate": ["javascript", "typescript", "vue", "json", "jsonc"]
+}

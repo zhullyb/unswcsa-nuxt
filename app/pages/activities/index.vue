@@ -36,10 +36,8 @@ watch([year, month], () => (limit.value = PAGE))
 const visible = computed(() => filtered.value.slice(0, limit.value))
 
 function update(key: 'year' | 'month', value: string) {
-  const query = { ...route.query }
-  if (value) query[key] = value
-  else delete query[key]
-  router.replace({ query })
+  // vue-router drops undefined values from the query
+  router.replace({ query: { ...route.query, [key]: value || undefined } })
 }
 function clear() {
   const { year: _y, month: _m, ...rest } = route.query

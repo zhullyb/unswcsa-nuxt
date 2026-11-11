@@ -18,6 +18,20 @@ node .output/server/index.mjs     # 启动生产服务（PORT / HOST 环境变�
 - 既连不上上游、也没有快照时，活动页显示「暂时无法加载」和重试按钮，首页不显示「最新活动」。
 - `/about`、`/join`、`/admin` 不依赖实时数据，构建时预渲染为静态文件；其余页面按请求渲染。
 
+## 开发约定
+
+- Node 与 pnpm 版本见 `package.json` 的 `engines` 和 `packageManager`（pnpm 会自动切换到声明的版本）。
+- 代码检查和格式化统一用 ESLint（`@nuxt/eslint` + ESLint Stylistic），不使用 Prettier：
+
+  ```bash
+  pnpm lint        # 检查
+  pnpm lint:fix    # 自动修复（含格式）
+  pnpm typecheck   # 类型检查
+  ```
+
+- 规则在 `nuxt.config.ts` 的 `eslint.config.stylistic` 和 `eslint.config.mjs` 中调整。
+- VS Code 打开项目时会推荐安装 ESLint、Vue 和 EditorConfig 插件，保存时自动执行 ESLint 修复（见 `.vscode/settings.json`）。
+
 ## 结构
 
 - `app/data/site.ts`：全部静态内容（部门、荣誉、团队、FAQ 等）

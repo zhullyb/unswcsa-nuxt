@@ -23,12 +23,12 @@ const latest = computed(() => events.value.slice(0, 3))
     <div class="container">
       <div class="intro-grid">
         <section aria-labelledby="intro-heading">
-          <h2 data-en="INTRODUCTION" id="intro-heading">学联简介</h2>
+          <h2 id="intro-heading" data-en="INTRODUCTION">学联简介</h2>
           <p class="muted lead">{{ introText }}</p>
           <NuxtLink class="text-link" to="/about">阅读更多 →</NuxtLink>
         </section>
         <section aria-labelledby="honors-heading">
-          <h2 data-en="HONOURS" id="honors-heading">荣誉与影响力</h2>
+          <h2 id="honors-heading" data-en="HONOURS">荣誉与影响力</h2>
           <HonorList :items="featuredHonors" />
         </section>
       </div>
@@ -49,7 +49,7 @@ const latest = computed(() => events.value.slice(0, 3))
 
     <section v-if="latest.length" class="container latest-section" aria-labelledby="latest-heading">
       <div class="section-heading">
-        <h2 data-en="LATEST EVENTS" id="latest-heading">最新活动</h2>
+        <h2 id="latest-heading" data-en="LATEST EVENTS">最新活动</h2>
         <NuxtLink class="text-link" to="/activities">查看全部活动 →</NuxtLink>
       </div>
       <div class="three-grid">
@@ -70,7 +70,7 @@ const latest = computed(() => events.value.slice(0, 3))
 
     <section class="container social-section" aria-labelledby="social-heading">
       <div class="section-heading">
-        <h2 data-en="FOLLOW US" id="social-heading">关注我们</h2>
+        <h2 id="social-heading" data-en="FOLLOW US">关注我们</h2>
         <p class="muted">扫码关注我们，点击二维码可查看原图</p>
       </div>
       <ul class="social-grid">

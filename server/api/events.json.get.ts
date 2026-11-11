@@ -12,10 +12,10 @@ export interface CsaEvent {
   venue: string
 }
 
-const isIso = (d: unknown) =>
+const isIso = (d: unknown): d is string =>
   typeof d === 'string' && /(?:Z|[+-]\d{2}:\d{2})$/.test(d) && Number.isFinite(Date.parse(d))
 
-const isHttps = (u: unknown) => {
+const isHttps = (u: unknown): u is string => {
   if (typeof u !== 'string') return false
   try {
     const url = new URL(u)
@@ -25,25 +25,27 @@ const isHttps = (u: unknown) => {
   }
 }
 
-const isEventbrite = (u: unknown) =>
-  isHttps(u) && /(^|\.)eventbrite\.(com|com\.au)$/.test(new URL(u as string).hostname)
+const isEventbrite = (u: unknown): u is string =>
+  isHttps(u) && /(^|\.)eventbrite\.(com|com\.au)$/.test(new URL(u).hostname)
 
-const STATUSES = ['live', 'started', 'ended', 'completed', 'canceled']
+const STATUSES: readonly unknown[] = ['live', 'started', 'ended', 'completed', 'canceled'] satisfies CsaEvent['status'][]
+const isStatus = (s: unknown): s is CsaEvent['status'] => STATUSES.includes(s)
 
 function sanitize(raw: unknown): CsaEvent[] {
-  if (!raw || typeof raw !== 'object' || !Array.isArray((raw as any).events)) {
+  const items: unknown = raw && typeof raw === 'object' && 'events' in raw ? raw.events : undefined
+  if (!Array.isArray(items)) {
     throw new Error('Invalid events payload')
   }
   const seen = new Set<string>()
   const out: CsaEvent[] = []
-  for (const e of (raw as any).events) {
-    if (
-      !e || typeof e.id !== 'string' || !/^\d+$/.test(e.id) || seen.has(e.id) ||
-      typeof e.title !== 'string' || !e.title.trim() ||
-      !isEventbrite(e.url) || !isIso(e.start) || !isIso(e.end) ||
-      Date.parse(e.end) < Date.parse(e.start) ||
-      !STATUSES.includes(String(e.status)) ||
-      !(e.image === null || isHttps(e.image))
+  for (const item of items as unknown[]) {
+    const e = (item && typeof item === 'object' ? item : {}) as Record<string, unknown>
+    if (typeof e.id !== 'string' || !/^\d+$/.test(e.id) || seen.has(e.id)
+      || typeof e.title !== 'string' || !e.title.trim()
+      || !isEventbrite(e.url) || !isIso(e.start) || !isIso(e.end)
+      || Date.parse(e.end) < Date.parse(e.start)
+      || !isStatus(e.status)
+      || !(e.image === null || isHttps(e.image))
     ) continue
     seen.add(e.id)
     out.push({
@@ -63,7 +65,7 @@ function sanitize(raw: unknown): CsaEvent[] {
   return out.sort((a, b) => Date.parse(b.start) - Date.parse(a.start))
 }
 
-type Payload = { events: CsaEvent[]; fetchedAt: string }
+type Payload = { events: CsaEvent[], fetchedAt: string }
 
 // Last successful payload. Kept in memory and persisted to Nitro's `data` storage
 // (`.data/kv` on disk), so a server restart during an upstream outage can

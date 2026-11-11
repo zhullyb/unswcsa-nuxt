@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CsaEvent } from '~/composables/useEvents'
 
-const props = defineProps<{ event: CsaEvent; now: number; compact?: boolean }>()
+const props = defineProps<{ event: CsaEvent, now: number, compact?: boolean }>()
 const state = computed(() => eventState(props.event, props.now))
 const imgFailed = ref(false)
 </script>
