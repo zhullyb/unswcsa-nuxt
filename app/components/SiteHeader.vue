@@ -142,7 +142,13 @@ const isActive = (path: string) => (path === '/' ? route.path === '/' : route.pa
     box-shadow: 0 16px 32px rgb(3 32 123 / 0.12);
   }
   .primary-nav.is-open { display: flex; animation: menu-in 0.18s var(--ease) both; }
-  .primary-nav a { padding: 12px 8px; border-top: 1px solid var(--line); font-size: 1rem; }
-  .primary-nav a::after { left: 8px; right: auto; width: 28px; bottom: 5px; }
+  .primary-nav a { padding: 12px 16px; border-top: 1px solid var(--line); font-size: 1rem; transition: background-color 0.15s ease; }
+  /* In the stacked menu an underline reads as belonging to the next row,
+     so the current item gets a red bar on the left plus a faint tint of the same red. */
+  .primary-nav a::after { top: 10px; bottom: 10px; left: 0; right: auto; width: 3px; height: auto; border-radius: 2px; }
+  .primary-nav a:hover::after { background: transparent; }
+  .primary-nav a:hover { background: rgb(174 31 37 / 0.035); }
+  .primary-nav a.active { background: rgb(174 31 37 / 0.06); color: var(--brand-red); }
+  .primary-nav a.active::after { background: var(--brand-red); }
 }
 </style>
