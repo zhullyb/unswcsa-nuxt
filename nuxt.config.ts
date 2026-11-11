@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     // Legacy URLs, answered by the server with permanent redirects.
     '/brand-events': { redirect: { to: '/activities', statusCode: 301 } },
     '/brand-events/**': { redirect: { to: '/activities', statusCode: 301 } },
-    '/activities/*': { redirect: { to: '/activities', statusCode: 301 } },
+    '/activities/:id': { redirect: { to: '/activities', statusCode: 301 } },
     '/departments': { redirect: { to: '/team', statusCode: 301 } },
     '/leaders': { redirect: { to: '/team', statusCode: 301 } },
     // Pages with no live data or query-dependent content are prerendered at build time
