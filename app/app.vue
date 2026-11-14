@@ -1,5 +1,13 @@
 <script setup lang="ts">
-useHead({ titleTemplate: (t) => (t ? `${t} · 新南学联` : '新南学联 UNSWCSA') })
+// Title template, canonical and og:title / og:description / og:url come from nuxt-seo-utils.
+// Pages override the share image with their own `ogImage` where they have a better one.
+useSeoMeta({
+  ogImage: '/images/group-1200.webp',
+  ogImageWidth: 1200,
+  ogImageHeight: 800,
+  ogImageAlt: '新南学联成员合影',
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 <template>

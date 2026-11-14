@@ -18,6 +18,15 @@ node .output/server/index.mjs     # 启动生产服务（PORT / HOST 环境变�
 - 既连不上上游、也没有快照时，活动页显示「暂时无法加载」和重试按钮，首页不显示「最新活动」。
 - `/about`、`/join`、`/admin` 不依赖实时数据，构建时预渲染为静态文件；其余页面按请求渲染。
 
+## SEO
+
+使用 Nuxt SEO 的独立模块：`@nuxtjs/sitemap`、`@nuxtjs/robots`、`nuxt-schema-org`、`nuxt-seo-utils`，共用 `nuxt.config.ts` 中的 `site` 配置（站点地址、名称、描述、语言）。
+
+- `/sitemap.xml`、`/robots.txt` 自动生成；`/admin` 通过 routeRules `robots: false` 设为 noindex 并排除出 sitemap。
+- 标题模板（`页面 · 新南学联`）、canonical、Open Graph / Twitter 标签由 `nuxt-seo-utils` 统一生成；各页面用 `useSeoMeta({ title, description })` 设置自己的标题和描述。canonical 会去掉 `?year=` 等筛选参数。
+- 默认分享图在 `app/app.vue`，Schema.org 组织信息在 `nuxt.config.ts` 的 `schemaOrg.identity`。
+- 部署到其他域名时设置 `NUXT_SITE_URL`；测试环境可设 `NUXT_SITE_ENV=staging` 禁止搜索引擎收录。
+
 ## 开发约定
 
 - Node 与 pnpm 版本见 `package.json` 的 `engines` 和 `packageManager`（pnpm 会自动切换到声明的版本）。

@@ -8,7 +8,10 @@ definePageMeta({
     note: 'University of New South Wales Chinese Student Association',
   },
 })
-useHead({ title: '关于我们' })
+useSeoMeta({
+  title: '关于我们',
+  description: '新南学联成立于 1992 年，致力于陪伴新生融入、支持学业与职业发展、连接文化与校园生活、关注学生福祉。了解我们的使命、历程与荣誉。',
+})
 </script>
 
 <template>

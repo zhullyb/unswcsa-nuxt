@@ -1,6 +1,9 @@
 <script setup lang="ts">
 definePageMeta({ hero: { title: '全部活动', subtitle: '相聚于每一次活动' } })
-useHead({ title: '全部活动' })
+useSeoMeta({
+  title: '全部活动',
+  description: '新南学联近期与往期活动一览：迎新派对、徒步、树洞音乐会、校园夜市、端午游园会、职业分享等，可按年份和月份筛选并在 Eventbrite 报名。',
+})
 
 const PAGE = 12
 const route = useRoute()

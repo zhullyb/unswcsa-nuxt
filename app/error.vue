@@ -3,7 +3,11 @@ import type { NuxtError } from '#app'
 
 const props = defineProps<{ error: NuxtError }>()
 const notFound = computed(() => props.error.statusCode === 404)
-useHead({ title: `${notFound.value ? '页面不存在' : '出错了'} · 新南学联` })
+// nuxt-seo-utils skips the title template on error pages, so the suffix is written here.
+useSeoMeta({
+  title: `${notFound.value ? '页面不存在' : '出错了'} · 新南学联`,
+  robots: 'noindex',
+})
 </script>
 
 <template>

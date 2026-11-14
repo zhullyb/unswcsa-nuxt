@@ -8,7 +8,10 @@ definePageMeta({
     actions: [{ label: '查看常见问题', to: '/join#join-faq', icon: '↓', variant: 'red' }],
   },
 })
-useHead({ title: '加入我们' })
+useSeoMeta({
+  title: '加入我们',
+  description: '加入新南学联：了解招新流程（关注招新推文、填写报名表、参加面试）与常见问题，与我们一起策划活动、服务同学。',
+})
 </script>
 
 <template>

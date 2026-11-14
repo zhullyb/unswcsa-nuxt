@@ -2,7 +2,10 @@
 import { teams } from '~/data/site'
 
 definePageMeta({ hero: { title: '部门与团队', subtitle: '六个部门，一个家' } })
-useHead({ title: '部门与团队' })
+useSeoMeta({
+  title: '部门与团队',
+  description: '新南学联设有外联部、新媒体部、技术部、策划部、文体部和职规部六个部门。认识各部门的工作内容与历届主席团成员。',
+})
 
 const route = useRoute()
 const router = useRouter()

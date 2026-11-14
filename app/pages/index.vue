@@ -12,7 +12,12 @@ definePageMeta({
     ],
   },
 })
-useHead({ title: '首页' })
+useSeoMeta({
+  // The home page leads with the brand instead of `首页 · 新南学联`.
+  title: '新南学联 UNSWCSA',
+  titleTemplate: '%s · 新南威尔士大学中国学生学者联谊会',
+  description: '新南威尔士大学中国学生学者联谊会（UNSWCSA）官网：了解学联、查看近期活动、关注我们的社交账号。成立于 1992 年 —— 家，因为有你。',
+})
 
 const { events, now } = useEvents()
 const latest = computed(() => events.value.slice(0, 3))
